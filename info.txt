@@ -1,0 +1,36 @@
+https://retoolapi.dev/kSk6pm/data
+See all available endpoints here (generated with json-server).
+Endpoint URL
+
+HTTP method endpoints
+
+GET
+/kSk6pm/data
+
+
+GET filter
+/kSk6pm/data?nombre=value
+
+
+GET by id
+/kSk6pm/data/1
+
+
+GET paginate
+/kSk6pm/data?_page=2&_limit=10
+
+
+POST
+/kSk6pm/data
+
+
+PUT
+/kSk6pm/data/1
+
+
+PATCH
+/kSk6pm/data/1
+
+
+DELETE
+/kSk6pm/data/1
