@@ -40,3 +40,61 @@ function mostrarDatos(datos){
 
 //Llamada inicial para que se carguen los datos que vienen del servidor
 obtenerPersona();
+
+
+//Agregar un nuevo registro
+const modal = document.getElementById("modal-agregar");
+const btnAgregar = document.getElementById("btnAbrirModal");
+const btnCerrar = document.getElementById("btnCerrarModal");
+
+btnAgregar.addEventListener("click", () => {
+
+    modal.showModal(); //Abrir el modal al hacer clic en el botón
+
+
+});
+
+btnCerrar.addEventListener("click", () => {
+    modal.close();//Cerrar Modal
+});
+
+//Agregar nuevo estudiante desde el formulario
+document.getElementById("frmAgregar").addEventListener("submit", async e =>{
+    e.preventDefault(); //"e" represeta "Submit" - evita que el formulario se envíe de golpe    
+
+    //Capturar los valores del formulario
+    const nombre = document.getElementById("nombre").ariaValueMax.trim();
+    const apellido = document.getElementById("apellido").ariaValueMax.trim();
+    const edad = document.getElementById("edad").ariaValueMax.trim();
+    const email = document.getElementById("email").ariaValueMax.trim();
+
+    //Validación básica
+    if(!nombre || !apellido || !email || !edad){
+        alert("Complete todos los campos");
+        return; //Evitar que el formulario se envíe
+    }
+
+    //Llamar a la API para enviar el usuario
+    const respuesta = await fetch(API_URL, {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({nombre, apellido, edad, email})
+    });
+    
+    if(respuesta.ok){
+        alert("El registro fue agregado correectamente");
+         //Limpiar el formulario y cerrar el modal
+        document.getElementById("frmAgregar").reset();
+
+        modal.close();
+
+        //Recargar la tabla
+        obtenerPersona();
+
+    }
+    else
+    {
+        alert("Hubo un error al agregar")
+    }
+
+});
