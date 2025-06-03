@@ -30,7 +30,7 @@ function mostrarDatos(datos){
                 <td>${persona.email}</td>
                 <td>
                     <button>Editar</button>
-                    <button>Eliminar</button>
+                    <button onClick="EliminarPersona(${persona.id})">Eliminar</button>
                 </td>
             </tr>
        `
@@ -40,7 +40,6 @@ function mostrarDatos(datos){
 
 //Llamada inicial para que se carguen los datos que vienen del servidor
 obtenerPersona();
-
 
 //Agregar un nuevo registro
 const modal = document.getElementById("modal-agregar");
@@ -63,10 +62,10 @@ document.getElementById("frmAgregar").addEventListener("submit", async e =>{
     e.preventDefault(); //"e" represeta "Submit" - evita que el formulario se envíe de golpe    
 
     //Capturar los valores del formulario
-    const nombre = document.getElementById("nombre").ariaValueMax.trim();
-    const apellido = document.getElementById("apellido").ariaValueMax.trim();
-    const edad = document.getElementById("edad").ariaValueMax.trim();
-    const email = document.getElementById("email").ariaValueMax.trim();
+    const nombre = document.getElementById("nombre").value.trim();
+    const apellido = document.getElementById("apellido").value.trim();
+    const edad = document.getElementById("edad").value.trim();
+    const email = document.getElementById("email").value.trim();
 
     //Validación básica
     if(!nombre || !apellido || !email || !edad){
@@ -98,3 +97,18 @@ document.getElementById("frmAgregar").addEventListener("submit", async e =>{
     }
 
 });
+
+
+
+//Función para borrar registros
+async function EliminarPersona(id){
+    const confirmacion = confirm("¿Estas seguro de eliminar este registro?");
+
+    //Validamos si el usuario dijo que sí desea borrar
+    if(confirmacion){
+        await fetch(`${API_URL}/${id}`, {method: "DELETE"});
+    
+        //Recargamos la tabla para ver la eliminación 
+        obtenerPersona();
+    }
+}
